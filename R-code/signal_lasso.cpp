@@ -39,14 +39,22 @@ double rcpp_max(double x, double y) {
 
 // [[Rcpp::export]]
 List Signal_c(VectorXd Y, MatrixXd X, VectorXd beta0, VectorXd Re2, 
-              VectorXd ep1, VectorXd ep2, int iter_max, int p, double delta) {
+              VectorXd ep1, VectorXd ep2,int constant, int iter_max, int p, double delta) {
   VectorXd beta1;
   VectorXd eps;
-  eps=Y-X*beta0;
+  double mu;
   int iter=1;
   double res=1, Re, Re1;
   while(iter<=iter_max && res>delta){
     beta1=beta0;
+    eps=Y-X*beta0;
+    if(constant==1){
+      mu=eps.mean();
+    }
+    else{
+      mu=0;
+    }
+    eps=eps.array()-mu;
     for(int i=0; i<p; i++){
       eps=eps+X.col(i)*beta0(i);
       Re1=eps.adjoint()*X.col(i);
@@ -66,6 +74,7 @@ List Signal_c(VectorXd Y, MatrixXd X, VectorXd beta0, VectorXd Re2,
     res=sqrt((beta1-beta0).adjoint()*(beta1-beta0));
   }
   List out;
+  out["Mu"]=mu;
   out["Beta"]=beta0;
   out["iters"]=iter;
   return out;
