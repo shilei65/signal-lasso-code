@@ -28,8 +28,7 @@ alpha=0.05;
     [Adj_Re2,xSIZE2] = Signal_Lasso_2(y,Fai,SIZE,Lambda1,Lambda2,lambda0);
     [ SREL2,SRNL2,PRC2,MSE2 ] = AM ( Adj,Adj_Re2,alpha ) ;
     
-    % In order are True positive rate(SREL),True negative rate (SRNL),
-    % Precision, and MSE respectively
+    % In order are SREL,SRNL,Precision, and MSE respectively
     
     'Acurracy of reconstruction using Lasso method'
     [ SREL1,SRNL1,PRC1,MSE1 ]

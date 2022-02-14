@@ -1,7 +1,7 @@
-function [ TPR,TNR,PRC,MSE ] = AM ( Adj,Adj_Re,alpha )
+function [ SREL,SRNL,PRC,MSE ] = AM ( Adj,Adj_Re,alpha )
 % Function for computation of reconstruction accuracy
-% TPR is true positive rate (SREL), TNR is true negative rate (SRNL)
-%PCR is the precision rate, which is the fraction of correctly inferred links out of predicted signal links. 
+% SREL is success rate of existence link, SRNL is the success rate of existence link
+% PCR is the precision rate, which is the fraction of correctly inferred links out of predicted signal links. 
 
 N=size(Adj,1);
 sum2=length(find(Adj==0));         
@@ -32,8 +32,8 @@ for i=1:N
     end
 end;
 
-TPR=TP/sum1;
-TNR=1-FP/sum2;
+SREL=TP/sum1;
+SRNL=TN/sum2;
 PRC=TP/(TP+FP);
 MSE=sum(sum((Adj-Adj_Re).*(Adj-Adj_Re)))/(N*N);
 clear TP TN FP;

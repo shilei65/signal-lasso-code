@@ -17,13 +17,9 @@ alpha=0.05;
     SIZE = size(Stra,1);
     clear Stra Unity;
     
-% Lasso estimator
-    [b0,fitinfor]=lasso(Fai,y,'CV',5); %Default function of lasso in matlab
-    Lam0=fitinfor.Lambda;
-    index0=fitinfor.IndexMinMSE;
-    B0=b0(:,index0);
-    Adj_Re1=reshape(B0,SIZE,SIZE);
-    clear Lam0 index0 b0 B0;
+    % Lasso estimator    
+    lambda0=1e-7;
+    [Adj_Re1,xSIZE] = LASSO(y,Fai,SIZE,lambda0);
     [ SREL1,SRNL1,PRC1,MSE1 ] = AM ( Adj,Adj_Re1,alpha );
  
     
